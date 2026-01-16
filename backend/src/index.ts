@@ -6,6 +6,10 @@ import { Env } from "./config/env.config"
 import { asyncHandler } from "./middlewares/asyncHandler.middleware";
 import { HTTPSTATUS } from "./config/http.config";
 import connectDatabase from "./config/database.config";
+import "./config/passport.config";
+import passport from "passport";
+import { errorHandler } from "./middlewares/errorHandler.middleware";
+import router from "./routes";
 
 const app = express();
 
@@ -23,6 +27,10 @@ app.get('/health', asyncHandler(async (req: Request, res) => {
         message: 'Server is healthy'
     });
 }));
+
+app.use("/api" , router);
+
+app.use(errorHandler)
 
 app.listen(Env.PORT , async () => {
     await connectDatabase();
