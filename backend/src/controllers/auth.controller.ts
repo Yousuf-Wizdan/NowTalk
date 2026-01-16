@@ -10,7 +10,8 @@ export const registerController = asyncHandler(
     const body = registerSchema.parse(req.body);
 
     const user = await registerService(body);
-    const userId = user._id.toString();
+    const userId = String(user._id);
+    console.log("Registered User ID:", userId);
 
     return setJwtAuthCookie({
       res,
