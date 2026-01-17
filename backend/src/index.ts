@@ -2,16 +2,21 @@ import "dotenv/config";
 import express , { Request } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import http from "http";
 import { Env } from "./config/env.config"
 import { asyncHandler } from "./middlewares/asyncHandler.middleware";
 import { HTTPSTATUS } from "./config/http.config";
 import connectDatabase from "./config/database.config";
 import "./config/passport.config";
-import passport from "passport";
 import { errorHandler } from "./middlewares/errorHandler.middleware";
 import router from "./routes";
+import { initializeSocket } from "./lib/socket";
 
 const app = express();
+const server = http.createServer(app);
+
+//socket
+initializeSocket(server);
 
 app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
