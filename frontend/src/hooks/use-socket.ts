@@ -1,6 +1,7 @@
 import { io, Socket } from "socket.io-client";
 import { create } from "zustand";
 
+console.log(import.meta.env.VITE_API_URL)
 const BASE_URL =
   import.meta.env.MODE === "development" ? import.meta.env.VITE_API_URL : "/";
 
@@ -29,6 +30,10 @@ export const useSocket = create<SocketState>()((set, get) => ({
 
     newSocket.on("connect", () => {
       console.log("Socket connected", newSocket.id);
+    });
+
+    newSocket.on("connect_error", (error) => {
+      console.error("Socket connection error:", error.message);
     });
 
     newSocket.on("online:users", (userIds) => {
