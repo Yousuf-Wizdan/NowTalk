@@ -4,7 +4,7 @@
 html,
 hody {
   height: 100%;
-  font-family: "DM Sans", serif !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
 @custom-variant dark (&:is(.dark *));
