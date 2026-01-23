@@ -25,19 +25,37 @@ export const initializeSocket = (httpServer: HTTPServer) => {
     try {
       const rawCookie = socket.handshake.headers.cookie;
 
-      if (!rawCookie) return next(new Error("Unauthorized"));
+      if (!rawCookie) {
+        console.log("No cookie found");
+        return next(new Error("Unauthorized: No cookie"));
+      }
 
-      const token = rawCookie?.split("=")?.[1]?.trim();
-      if (!token) return next(new Error("Unauthorized"));
+      // Parse cookies properly
+      const cookies = rawCookie.split(';').reduce((acc, cookie) => {
+        const [key, value] = cookie.trim().split('=');
+        acc[key] = value;
+        return acc;
+      }, {} as Record<string, string>);
+
+      const token = cookies['accessToken'];
+      if (!token) {
+        console.log("No token found in cookies", cookies);
+        return next(new Error("Unauthorized: No token"));
+      }
 
       const decodedToken = jwt.verify(token, Env.JWT_SECRET) as {
         userId: string;
       };
-      if (!decodedToken) return next(new Error("Unauthorized"));
+      if (!decodedToken) {
+        console.log("Invalid token");
+        return next(new Error("Unauthorized: Invalid token"));
+      }
 
       socket.userId = decodedToken.userId;
+      console.log("Socket authenticated for user:", decodedToken.userId);
       next();
     } catch (error) {
+      console.error("Socket auth error:", error);
       next(new Error("Internal server error"));
     }
   });
