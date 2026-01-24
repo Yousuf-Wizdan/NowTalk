@@ -1,5 +1,5 @@
 import "dotenv/config";
-import express , { Request } from "express";
+import express , { Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import http from "http";
@@ -11,6 +11,7 @@ import "./config/passport.config";
 import { errorHandler } from "./middlewares/errorHandler.middleware";
 import router from "./routes";
 import { initializeSocket } from "./lib/socket";
+import path from "path/win32";
 
 const app = express();
 const server = http.createServer(app);
@@ -34,6 +35,17 @@ app.get('/health', asyncHandler(async (req: Request, res) => {
 }));
 
 app.use("/api" , router);
+
+if (Env.NODE_ENV === "production") {
+  const clientPath = path.resolve(__dirname, "../../frontend/dist");
+
+  //Serve static files
+  app.use(express.static(clientPath));
+
+  app.get(/^(?!\/api).*/, (req: Request, res: Response) => {
+    res.sendFile(path.join(clientPath, "index.html"));
+  });
+}
 
 app.use(errorHandler)
 
