@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { Link } from "react-router-dom";
+import { AUTH_ROUTES } from "@/routes/routes";
 
 const SignIn = () => {
   const { login, isLoggingIn } = useAuth();
@@ -101,7 +102,7 @@ const SignIn = () => {
 
                 <div className="text-center text-sm">
                   Dont have an account?{" "}
-                  <Link to="/sign-up" className="underline">
+                  <Link to={AUTH_ROUTES.SIGN_UP} className="underline">
                     Sign Up
                   </Link>
                 </div>

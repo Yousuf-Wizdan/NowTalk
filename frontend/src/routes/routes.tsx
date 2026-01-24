@@ -3,9 +3,11 @@ import SignUp from "@/pages/auth/sign-up";
 import Chat from "@/pages/chat";
 import SingleChat from "@/pages/chat/chatId";
 import Account from "@/pages/account";
+import Landing from "@/pages/landing";
 
 export const AUTH_ROUTES = {
-  SIGN_IN: "/",
+  LANDING: "/",
+  SIGN_IN: "/sign-in",
   SIGN_UP: "/sign-up",
 };
 
@@ -16,6 +18,10 @@ export const PROTECTED_ROUTES = {
 };
 
 export const authRoutesPaths = [
+  {
+    path: AUTH_ROUTES.LANDING,
+    element: <Landing />,
+  },
   {
     path: AUTH_ROUTES.SIGN_IN,
     element: <SignIn />,
