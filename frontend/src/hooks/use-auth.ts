@@ -16,6 +16,7 @@ interface AuthState {
   login: (data: LoginType) => void;
   logout: () => void;
   isAuthStatus: () => void;
+  updateUser: (user: UserType) => void;
 }
 
 //Without Persist
@@ -74,6 +75,9 @@ export const useAuth = create<AuthState>()((set) => ({
     } finally {
       set({ isAuthStatusLoading: false });
     }
+  },
+  updateUser: (user: UserType) => {
+    set({ user });
   },
 }));
 

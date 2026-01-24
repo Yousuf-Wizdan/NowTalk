@@ -4,7 +4,8 @@ import { isUserOnline } from "@/lib/helper";
 import Logo from "./logo";
 import { PROTECTED_ROUTES } from "@/routes/routes";
 import { Button } from "./ui/button";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +18,7 @@ import AvatarWithBadge from "./avatar-with-badge";
 const AsideBar = () => {
   const { user, logout } = useAuth();
   const { theme, setTheme } = useTheme();
+  const navigate = useNavigate();
 
   const isOnline = isUserOnline(user?._id);
 
@@ -89,6 +91,10 @@ const AsideBar = () => {
               align="end"
             >
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => navigate(PROTECTED_ROUTES.ACCOUNT)}>
+                <User className="mr-2 h-4 w-4" />
+                Account Settings
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
