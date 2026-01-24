@@ -1,4 +1,5 @@
 import "dotenv/config";
+import path from "path";
 import express , { Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -11,7 +12,7 @@ import "./config/passport.config";
 import { errorHandler } from "./middlewares/errorHandler.middleware";
 import router from "./routes";
 import { initializeSocket } from "./lib/socket";
-import path from "path/win32";
+
 
 const app = express();
 const server = http.createServer(app);
